@@ -242,7 +242,16 @@
                         for(var j=0; j<data[i].routes.length; ++j)
                         {
                             var scheduleDiv = document.createElement('div');
-                            scheduleDiv
+                            scheduleDiv.className = "col-mg-12 schedule well";
+                            scheduleDiv.id = "schedule"+i;
+                            
+                            var condensedDiv = document.createElement('div');
+                            condensedDiv.className = "schedule-condensed";
+                            
+                            var expandedDiv = document.createElement('div');
+                            expandedDiv.className = "schedule-expanded";
+                            
+                            var condensedContent = "<span class='spl'>"++"</span>";
                         }
                     }
                     
