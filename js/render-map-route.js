@@ -1,6 +1,5 @@
 var directionsService = new google.maps.DirectionsService();
 
-<<<<<<< HEAD
 var renderOptions = { draggable: false };
 var directionDisplay = new google.maps.DirectionsRenderer(renderOptions);
 var singapore = new google.maps.LatLng(1.3437459, 103.8240449);
@@ -19,14 +18,13 @@ function getParameterByName(name) {
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-=======
+
 var renderOptions = { draggable: true };
 var directionDisplay = new google.maps.DirectionsRenderer(renderOptions);
 var singapore = new google.maps.LatLng(1.3437459, 103.8240449);
 //set the directions display service to the map
 var mapOptions = {zoom:12, center: singapore};
 
->>>>>>> 6f7627628d25aa95204a49d8032d6a0bc73a6813
 
 function map_inititalize()
 {
@@ -46,11 +44,9 @@ function calcRoute()
   //build the waypoints
   //free api allows a max of 9 total stops including the start and end address
   //premier allows a total of 25 stops. 
-<<<<<<< HEAD
   var items = [getParameterByName('pick')];
-=======
+
   var items = ["Block 73 Telok Blangah heights Singapore 100073"];
->>>>>>> 6f7627628d25aa95204a49d8032d6a0bc73a6813
   var waypoints = [];
   for (var i = 0; i < items.length; i++) {
     var address = items[i];
@@ -63,14 +59,11 @@ function calcRoute()
   }
 
   //set the starting address and destination address
-<<<<<<< HEAD
   var originAddress = getParameterByName('start');
   var destinationAddress = getParameterByName('deliver');
-=======
   var originAddress = "9 Ayer Rajah Avenue Singapore 138647";
   var destinationAddress = "2450 Ang Mo Kio Avenue 8 Singapore 569811";
 
->>>>>>> 6f7627628d25aa95204a49d8032d6a0bc73a6813
   //build directions request
   var request = {
     origin: originAddress,
