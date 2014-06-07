@@ -15,7 +15,8 @@
         <!-- Add custom CSS here -->
         <link href="css/simple-sidebar.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>        
+        <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>     
+        
     </head>
 
 
@@ -51,7 +52,7 @@
                 </div>
                 <!-- Keep all page content within the page-content inset div! -->
                 <div class="page-content inset">
-                    <div class="row">
+                    <div class="row" id="schedule-cards">
                         <div class="col-md-12">
                             <p class="email" id="email">email@email.com</p>
                         </div>
@@ -63,7 +64,8 @@
                             <p class="address" id="postcode">100073</p>
                         </div>
                         <h4 class="wht">My schedule</h4>
-                        <div id="schedule-cards"></div>
+                        
+                        
                         <div class="col-mg-12 schedule well" id="schedule1">
                             <div class="schedule-condensed">
                                 <div class="spl">Bakery</div>
@@ -170,6 +172,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
 
 
@@ -179,36 +182,7 @@
 
     </div>
 
-    <script>
-        function removeExtras( str)
-        {
-            str = str.replace('<p>','');
-            str = str.replace('</p>', '');
-            str = str.replace(/<br>/g, ' ');
-            str = str.replace(/\t/g, '');
-            str = str.replace(/\n/g, '');
-            str = str.replace(/\s+/g, ' ');
-            return str;
-        }
-
-        $('.map-btn').click(function(){
-            var prnt = $(this).parentsUntil("schedule");
-
-            var locationAddress = document.getElementById("line1").innerHTML + document.getElementById("line2").innerHTML + ' ' + document.getElementById("city").innerHTML + ' ' + document.getElementById("postcode").innerHTML;
-            var pickAddress = prnt[1].children[1].children[0].innerHTML;
-            var deliverAddress = prnt[1].children[1].children[2].innerHTML;
-
-            pickAddress = removeExtras(pickAddress);
-            deliverAddress = removeExtras(deliverAddress);
-
-            console.log(pickAddress);
-            console.log(deliverAddress);
-
-            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress};
-            window.location.href = "route.html?"+$.param(obj, true);
-        });
-
-    </script>
+    
 
     <!-- Custom JavaScript for the Menu Toggle -->
     <script src="js/jquery-1.10.2.js"></script>
@@ -216,6 +190,7 @@
 
     <!-- Custom JavaScript for the Menu Toggle -->
     <script>
+        var username = "Nagappan";
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("active");
@@ -224,26 +199,24 @@
         {
         $.ajax({
             dataType: "jsonp",
-            url: "http://ffh.cloudapp.net/users",
+            url: "http://ffh.cloudapp.net/users?name="+username,
             success: function(data){
-                
-                var user="5392cfb4c0d72df2680dd74d";
                 
                 var userFound = 0;
                 for(var i=0; i<data.length; ++i)
                 {
-                    if(data[i]._id == user)
-                    {
                         userFound =1;
                         
                         document.getElementById("profname").innerHTML = data[i].name;
                         document.getElementById("email").innerHTML = data[i].email;
                         
+                        var cardsDiv = document.getElementById("schedule-cards");
+                        
                         for(var j=0; j<data[i].routes.length; ++j)
                         {
                             var scheduleDiv = document.createElement('div');
                             scheduleDiv.className = "col-mg-12 schedule well";
-                            scheduleDiv.id = "schedule"+i;
+                            scheduleDiv.id = "schedule"+j;
                             
                             var condensedDiv = document.createElement('div');
                             condensedDiv.className = "schedule-condensed";
@@ -251,19 +224,34 @@
                             var expandedDiv = document.createElement('div');
                             expandedDiv.className = "schedule-expanded";
                             
-                            var condensedContent = "<span class='spl'>"+data[i].pickName+"</span>to<span class='spl'"+data[i].destName+"</span>on<span>"+data[i].deliveries[i]+"</span>";
+                            var condensedContent = "<span class='spl'>"+data[i].routes[j].pickName+"</span>to<span class='spl'>"+data[i].routes[j].destName+"</span>on<span class='spl'>"+data[i].deliveries[j]+"</span><a href='#' class='btn btn-primary map-btn' id='map-btn'>Map</a>";
                             
-                            var expandedContent = "Goes here";
                             
-                            condensedDiv.appendChild(condensedContent);
-                            expandedDiv.appendChild(expandedContent);
+                            var pickAddressDiv = document.createElement('div');
+                            pickAddressDiv.className = "pickaddress";
+                            pickAddressDiv.innerHTML = data[i].routes[j].pick;
+                            
+                            var symbolDiv = document.createElement('div');
+                            symbolDiv.className = "delivertosymbol";
+                            symbolDiv.innerHTML = "<i class='fa fa-lg fa-long-arrow-right' style='margin-top: 0;'></i>";
+                            
+                            var deliverAddressDiv = document.createElement('div');
+                            deliverAddressDiv.className = "deliveraddress";
+                            deliverAddressDiv.innerHTML = data[i].routes[j].destination;
+                            
+                            expandedDiv.appendChild(pickAddressDiv);
+                            expandedDiv.appendChild(symbolDiv);
+                            expandedDiv.appendChild(deliverAddressDiv);
+                            
+                            condensedDiv.innerHTML = condensedContent;
+                            //expandedDiv.innerHTML = expandedContent;
                             
                             scheduleDiv.appendChild(condensedDiv);
                             scheduleDiv.appendChild(expandedDiv);
                             
-                            
+                            cardsDiv.appendChild(scheduleDiv);
                         }
-                    }
+                    
                     
                 }
                 
@@ -277,7 +265,34 @@
             });
     </script>
     <script>
-        
+        function removeExtras( str)
+        {
+            str = str.replace('<p>','');
+            str = str.replace('</p>', '');
+            str = str.replace(/<br>/g, ' ');
+            str = str.replace(/\t/g, '');
+            str = str.replace(/\n/g, '');
+            str = str.replace(/\s+/g, ' ');
+            return str;
+        }
+        window.onload=function(){
+        $('.map-btn').click(function(){
+            var prnt = $(this).parentsUntil("schedule");
+            var locationAddress = document.getElementById("line1").innerHTML + document.getElementById("line2").innerHTML + ' ' + document.getElementById("city").innerHTML + ' ' + document.getElementById("postcode").innerHTML;
+            var pickAddress = prnt[1].children[1].children[0].innerHTML;
+            var deliverAddress = prnt[1].children[1].children[2].innerHTML;
+            alert (pickAddress);
+            pickAddress = removeExtras(pickAddress);
+            deliverAddress = removeExtras(deliverAddress);
+
+            console.log(pickAddress);
+            console.log(deliverAddress);
+
+            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress};
+            window.location.href = "route.html?"+$.param(obj, true);
+        });
+        };
+
     </script>
 
 </body>
