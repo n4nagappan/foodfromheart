@@ -251,7 +251,14 @@
                             var expandedDiv = document.createElement('div');
                             expandedDiv.className = "schedule-expanded";
                             
-                            var condensedContent = "<span class='spl'>"+data[i].pickName+"</span>to<span class='spl'"++"</span>";
+                            var condensedContent = "<span class='spl'>"+data[i].pickName+"</span>to<span class='spl'"+data[i].destName+"</span>on<span>"+data[i].deliveries[i]+"</span>";
+                            
+                            var expandedContent = "Goes here";
+                            
+                            condensedDiv.appendChild(condensedContent);
+                            expandedDiv.appendChild(expandedContent);
+                            
+                            
                         }
                     }
                     
