@@ -34,11 +34,7 @@
                     </li>
                     <li ><img src="images/profileblank.png" width="50px;"></li>
                     <hr>
-                    <li><a href="profile.html">Profile</a>
-                    </li>
-                    <li><a href="#">Schedule</a>
-                    </li>
-                    <li><a href="#">Requests</a>
+                    <li><a id="profileLink">Profile</a>
                     </li>
                     <hr>
                 </ul>
@@ -88,6 +84,14 @@
             $("#wrapper").toggleClass("active");
         });
     </script>
+    <script>
+        $(document).ready(function()
+        {
+            var a = document.getElementById("profileLink");
+            a.href="profile.html?name="+localStorage.getItem("uniusername");
+        });
+    </script>
+
 
 
 </body>

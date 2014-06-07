@@ -5875,3 +5875,13 @@ button.close {
   background: #eee;
   overflow: scroll;
 }
+
+#username {
+  color: #333;
+  margin: 5px;
+}
+
+#password {
+  color: #333;
+  margin: 5px;
+}

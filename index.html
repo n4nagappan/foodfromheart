@@ -32,21 +32,22 @@
 
           var username = $("#username").val();
           var obj = {name : username};
+          window.location.href = "profile.html?"+$.param(obj, true);
 
-          $.ajax({
-              url: 'http://ffh.cloudapp.net/users?name='+username,
-              type: 'get',
-              dataType: 'jsonp',
-              success: function(data) {
-                           console.log(data);
-                       }
-          });
+//          $.ajax({
+//              url: 'http://ffh.cloudapp.net/users?name='+username,
+//              type: 'get',
+//              dataType: 'jsonp',
+//              success: function(data) {
+//                           console.log(data);
+//                       }
+//          });
 
         });
         </script>
 
         <p>
-          <a class="btn btn-primary google-signing" href="/auth/google"><i class="fa fa-google-plus" style="margin-right: 20px;"></i>Connect using Google</a>
+          <a class="btn btn-danger google-signing" href="/auth/google"><i class="fa fa-google-plus" style="margin-right: 20px;"></i>Connect using Google</a>
         </p>
 
 </body>

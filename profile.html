@@ -32,11 +32,7 @@
                     </li>
                     <li ><img src="images/profileblank.png" width="50px;"></li>
                     <hr>
-                    <li><a href="profile.html">Profile</a>
-                    </li>
-                    <li><a href="#">Schedule</a>
-                    </li>
-                    <li><a href="#">Requests</a>
+                    <li><a id="profileLink" href="profile.html">Profile</a>
                     </li>
                     <hr>
                 </ul>
@@ -80,7 +76,15 @@
 
     <!-- Custom JavaScript for the Menu Toggle -->
     <script>
-        var username = "Nagappan";
+        function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+        
+        var username = getParameterByName('name');
+        localStorage.setItem("uniusername", username);
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("active");
@@ -89,7 +93,7 @@
         {
         $.ajax({
             dataType: "jsonp",
-            url: "http://ffh.cloudapp.net/users?name="+username,
+            url: "http://ffh.cloudapp.net/users?name="+localStorage.getItem("uniusername"),
             success: function(data){
                 
                 var userFound = 0;
@@ -102,7 +106,7 @@
                         
                         var cardsDiv = document.getElementById("schedule-cards");
                         
-                        for(var j=0; j<data[i].routes.length; ++j)
+                        for(var j=0; j<data[i].schedule.length; ++j)
                         {
                             var scheduleDiv = document.createElement('div');
                             scheduleDiv.className = "col-mg-12 schedule well";
@@ -114,7 +118,7 @@
                             var expandedDiv = document.createElement('div');
                             expandedDiv.className = "schedule-expanded";
                             
-                            var time = new Date(data[i].deliveries[j]);
+                            var time = new Date(data[i].schedule[j].deliveryTime);
                             var year = time.getFullYear();
                             var month = time.getMonth()+1;
                             var date1 = time.getDate();
@@ -122,12 +126,12 @@
                             var minutes = time.getMinutes();
                             var seconds = time.getSeconds();
                             
-                            var condensedContent = "<span class='spl'>"+data[i].routes[j].pickName+"</span>to<span class='spl'>"+data[i].routes[j].destName+"</span>at<span class='spl'>"+hour+":"+minutes+"</span>on<span class='spl'>"+date1+"-"+month+"-"+year+"</span><a href='#' class='btn btn-primary map-btn' id='map-btn'>View</a>";
+                            var condensedContent = "<span class='spl'>"+data[i].schedule[j].route.pickName+"</span>to<span class='spl'>"+data[i].schedule[j].route.destName+"</span>at<span class='spl'>"+hour+":"+minutes+"</span>on<span class='spl'>"+date1+"-"+month+"-"+year+"</span><a href='#' class='btn btn-primary map-btn' id='map-btn'>View</a>";
                             
                             
                             var pickAddressDiv = document.createElement('div');
                             pickAddressDiv.className = "pickaddress";
-                            pickAddressDiv.innerHTML = data[i].routes[j].pick;
+                            pickAddressDiv.innerHTML = data[i].schedule[j].route.pick;
                             
                             var symbolDiv = document.createElement('div');
                             symbolDiv.className = "delivertosymbol";
@@ -135,7 +139,7 @@
                             
                             var deliverAddressDiv = document.createElement('div');
                             deliverAddressDiv.className = "deliveraddress";
-                            deliverAddressDiv.innerHTML = data[i].routes[j].destination;
+                            deliverAddressDiv.innerHTML = data[i].schedule[j].route.destination;
                             
                             expandedDiv.appendChild(pickAddressDiv);
                             expandedDiv.appendChild(symbolDiv);
@@ -189,7 +193,14 @@
             window.location.href = "route.html?"+$.param(obj, true);
         });
         };
-
+        
+        
+        $(document).ready(function()
+        {
+            var a = document.getElementById("profileLink");
+            a.href="profile.html?name="+localStorage.getItem("uniusername");
+        });
+    
     </script>
 
 </body>
