@@ -1,7 +1,12 @@
+<head>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
 <link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/simple-sidebar.css" rel="stylesheet">
 <link href="css/signup.css" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>   
+</head>
 
 <body>
   <div class="container" style="margin-top: 200px;">
@@ -12,9 +17,36 @@
       <form class="form-signin" data-ember-action="2">
         <img src="images/logo.png">
         <h3 class="form-signin-heading">For volunteers</h2>
-        <br><br><br>
+        <br>
+
+        <div class="login">
+          <form id="update_db">
+              <input id="username" type="text" name="username" value=""><br>
+              <input id="password" type="text" name="password" value=""><br>
+              <input id="update_button" type="button" value="Login" class="btn btn-primary"/>
+          </form>
+        </div>
+
+        <script>       
+        $("#update_button").click( function() {
+
+          var username = $("#username").val();
+          var obj = {name : username};
+
+          $.ajax({
+              url: 'http://ffh.cloudapp.net/users?name='+username,
+              type: 'get',
+              dataType: 'jsonp',
+              success: function(data) {
+                           console.log(data);
+                       }
+          });
+
+        });
+        </script>
 
         <p>
           <a class="btn btn-primary google-signing" href="/auth/google"><i class="fa fa-google-plus" style="margin-right: 20px;"></i>Connect using Google</a>
         </p>
+
 </body>
