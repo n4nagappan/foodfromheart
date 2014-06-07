@@ -1,0 +1,25 @@
+<div class="col-mg-12 schedule well" id="schedule1">
+    <div class="schedule-condensed">
+    <div class="spl">{{bakeryName}}</div>
+    <div>to</div>
+        <div class="spl">{{homeName}}</div>
+        <div>at</div>
+        <div class="spl">{{time}}</div>
+        <div>on</div>
+        <div class="spl">{{date}}</div>
+        <a href="#" class="map-btn btn btn-primary" id="map-btn">Map</a>
+    </div>    
+
+    <!-- expanded card -->
+    <div class="schedule-expanded" style="margin-top:20px;">
+        <div class="pickupaddress">
+            {{pickupAddress}}
+        </div>
+        <div class="delivertosymbol"><i class="fa fa-lg fa-long-arrow-right" style="margin-top: 0;"></i></div>
+        <div class="deliveraddress">
+            {{deliveryAddress}}
+        </div>
+    </div>
+</div>
+
+
