@@ -5853,12 +5853,17 @@ button.close {
 }
 
 #map-canvas {
+<<<<<<< HEAD
   height: 250px;
+=======
+  height: 500px;
+>>>>>>> 6f7627628d25aa95204a49d8032d6a0bc73a6813
   width: 100%;
   background: #eee;
 }
 
 #direction-canvas {
+<<<<<<< HEAD
   height:250px;
   width: 100%;
   background: #eee;
@@ -5869,4 +5874,9 @@ button.close {
   background: none;
   border: 1px solid #fff;
   color: #fff;
+=======
+  height:500px;
+  background: #eee;
+  overflow: scroll;
+>>>>>>> 6f7627628d25aa95204a49d8032d6a0bc73a6813
 }
