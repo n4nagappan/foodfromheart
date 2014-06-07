@@ -46,7 +46,6 @@ function calcRoute()
   //premier allows a total of 25 stops. 
   var items = [getParameterByName('pick')];
 
-  var items = ["Block 73 Telok Blangah heights Singapore 100073"];
   var waypoints = [];
   for (var i = 0; i < items.length; i++) {
     var address = items[i];
@@ -61,8 +60,8 @@ function calcRoute()
   //set the starting address and destination address
   var originAddress = getParameterByName('start');
   var destinationAddress = getParameterByName('deliver');
-  var originAddress = "9 Ayer Rajah Avenue Singapore 138647";
-  var destinationAddress = "2450 Ang Mo Kio Avenue 8 Singapore 569811";
+  var originAddress = originAddress;
+  var destinationAddress = destinationAddress;
 
   //build directions request
   var request = {
