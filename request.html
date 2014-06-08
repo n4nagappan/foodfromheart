@@ -89,8 +89,8 @@
             success: function(allData){
                 
                 var data = localStorage.getItem("dataRequests");   
-                var userName = data.name;
-                var schId = data.schId;
+                var userName = data[0].name;
+                var schId = data[0].schId;
                 
                 for(var i=0; i<allData.length; ++i)
                 {
