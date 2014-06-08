@@ -127,7 +127,7 @@
                             var minutes = time.getMinutes();
                             var seconds = time.getSeconds();
                             
-                            var condensedContent = "<span class='spl'>"+data[i].schedule[j].route.pickName+"</span>to<span class='spl'>"+data[i].schedule[j].route.destName+"</span>at<span class='spl'>"+hour+":"+minutes+"</span>on<span class='spl'>"+date1+"-"+month+"-"+year+"</span><a href='#' class='btn btn-primary map-btn' id='map-btn'>View</a>";
+                            var condensedContent = "<span class='spl'>"+data[i].schedule[j].route.pickName+"</span>to<span class='spl'>"+data[i].schedule[j].route.destName+"</span>at<span class='spl'>"+hour+":"+minutes+"</span>on<span class='spl'>"+date1+"-"+month+"-"+year+"</span><a href='#' class='btn btn-primary map-btn' id='map-btn' onclick='getMap(this);'>View</a>";
                             
                             
                             var pickAddressDiv = document.createElement('div');
@@ -184,10 +184,13 @@
             str = str.replace(/\s+/g, ' ');
             return str;
         }
-        window.onload=function(){
-        $('.map-btn').click(function(){
-            var prnt = $(this).parentsUntil("schedule");
+        
+        //window.onload=
+        function getMap(e){
+        //$('.map-btn').click(function(){
+            var prnt = $(e).parentsUntil("schedule");
             var locationAddress = document.getElementById("line1").innerHTML + document.getElementById("line2").innerHTML + ' ' + document.getElementById("city").innerHTML + ' ' + document.getElementById("postcode").innerHTML;
+            
             var pickAddress = prnt[1].children[1].children[0].innerHTML;
             var deliverAddress = prnt[1].children[1].children[2].innerHTML;
             //var schId =  prnt[1].children[1].children[3].innerHTML;
@@ -200,7 +203,7 @@
             var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress//, schid: schId
                       };
             window.location.href = "route.html?"+$.param(obj, true);
-        });
+        //});
         };
         
         
