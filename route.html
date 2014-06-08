@@ -19,8 +19,8 @@
         <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/notifications.js"></script>
+        <!--<script src="/socket.io/socket.io.js"></script>
+        <script src="js/notifications.js"></script>-->
     </head>
 
 
@@ -67,7 +67,7 @@
                             <div id="direction-canvas" class="col-md-3"></div>
                         </div>
                         <br>
-                        <a href="#" class="btn btn-success">Mark as completed</a>
+                        <a href="#" class="btn btn-success" onclick="markComplete(this);">Mark as completed</a>
                         <a href="#" class="btn btn-danger" id="replacementBtn" onclick="sendReplacement(this);">Find replacement</a>
                     </div>
                 </div>
@@ -104,8 +104,63 @@
     }
     function sendReplacement(e)
     {
-        //getParameterByName('pick')
+        var pickAddress = getParameterByName('pick');
+        var deliverAddress = getParameterByName('deliver');
+        var startAddress = getParameterByName('start');
+        var deliveryTime = getParameterByName('deliveryTime');
+        
+        var obj = {
+            "name": localStorage.getItem("uniusername"),
+            "schedule": [
+                {
+                    "route": {
+                        "source": startAddress,
+                        "pick": pickAddress,
+                        "destination": deliverAddress
+                    },
+                    "deliveryTime": deliveryTime
+                }
+                    ]
+        };
+        
+          $.ajax({
+             url: 'http://ffh.cloudapp.net/users/replace',
+             type: 'POST',
+             data: obj
+         });
+       }
+        
+    function markComplete(e)
+    {
+        var pickAddress = getParameterByName('pick');
+        var deliverAddress = getParameterByName('deliver');
+        var startAddress = getParameterByName('start');
+        var deliveryTime = getParameterByName('deliveryTime');
+        
+        var obj = {
+            "name": localStorage.getItem("uniusername"),
+            "schedule": [
+                {
+                    "route": {
+                        "source": startAddress,
+                        "pick": pickAddress,
+                        "destination": deliverAddress
+                    },
+                    "deliveryTime": deliveryTime
+                }
+                    ]
+        };
+        
+          $.ajax({
+             url: 'http://ffh.cloudapp.net/users/complete',
+             type: 'POST',
+             data: obj
+         });
+        
+        alert("Thank you for delivering!");
     }
+        
+    
 </script>
 
 
