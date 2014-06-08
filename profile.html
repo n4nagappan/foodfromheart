@@ -141,9 +141,15 @@
                             deliverAddressDiv.className = "deliveraddress";
                             deliverAddressDiv.innerHTML = data[i].schedule[j].route.destination;
                             
+                            //var schIdDiv = document.createElement('div');
+                            //schIdDiv.className = "schId";
+                            //schIdDiv.innerHTML = data[i].schedule[j].schId;
+                            
                             expandedDiv.appendChild(pickAddressDiv);
                             expandedDiv.appendChild(symbolDiv);
                             expandedDiv.appendChild(deliverAddressDiv);
+                            //expandedDiv.appendChild(schIdDiv);
+                            
                             
                             condensedDiv.innerHTML = condensedContent;
                             //expandedDiv.innerHTML = expandedContent;
@@ -183,13 +189,15 @@
             var locationAddress = document.getElementById("line1").innerHTML + document.getElementById("line2").innerHTML + ' ' + document.getElementById("city").innerHTML + ' ' + document.getElementById("postcode").innerHTML;
             var pickAddress = prnt[1].children[1].children[0].innerHTML;
             var deliverAddress = prnt[1].children[1].children[2].innerHTML;
+            //var schId =  prnt[1].children[1].children[3].innerHTML;
             pickAddress = removeExtras(pickAddress);
             deliverAddress = removeExtras(deliverAddress);
 
             console.log(pickAddress);
             console.log(deliverAddress);
 
-            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress};
+            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress//, schid: schId
+                      };
             window.location.href = "route.html?"+$.param(obj, true);
         });
         };
