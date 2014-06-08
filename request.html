@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Volunteer profile</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Add custom CSS here -->
+        <link href="css/simple-sidebar.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>     
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/notifications.js"></script>
+    </head>
+
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-brand"><a href="#">Name</a>
+                    </li>
+                    <li ><img src="images/profileblank.png" width="50px;"></li>
+                    <hr>
+                    <li><a id="profileLink" href="profile.html">Profile</a>
+                    </li>
+                    <li><a id="requestLink" href="request.html">Requests <span id="notification">1</span></a>
+                    </li>
+                    <hr>
+                </ul>
+            </div>
+
+            <!-- Page content -->
+            <div id="page-content-wrapper">
+                <div class="content-header">
+                    <a id="menu-toggle" href="#" ><i class="fa fa-2x fa-bars"></i></a>
+                    <h1 class="wht">
+                        Your requests
+                    </h1>
+                </div>
+                <!-- Keep all page content within the page-content inset div! -->
+                <div class="page-content inset">
+                    <div class="row" id="schedule-cards">
+                        <h4 class="wht">Pending</h4>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    
+
+    <!-- Custom JavaScript for the Menu Toggle -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Custom JavaScript for the Menu Toggle -->
+    <script>
+        function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+        
+        var username = getParameterByName('name');
+        localStorage.setItem("uniusername", username);
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("active");
+        });
+        $(document).ready(function()
+        {
+            $.ajax({
+            dataType: "jsonp",
+            url: "http://ffh.cloudapp.net/users",
+            success: function(allData){
+                
+                var data = localStorage.getItem("dataRequests");   
+                var userName = data.name;
+                var schId = data.schId;
+                
+                for(var i=0; i<allData.length; ++i)
+                {
+                    
+                    for(var j=0; j<allData[i].schedule.length; ++j)
+                    {
+                            
+                            var scheduleDiv = document.createElement('div');
+                            scheduleDiv.className = "col-mg-12 schedule well";
+                            scheduleDiv.id = "schedule"+j;
+                            
+                            var condensedDiv = document.createElement('div');
+                            condensedDiv.className = "schedule-condensed";
+                            
+                            var expandedDiv = document.createElement('div');
+                            expandedDiv.className = "schedule-expanded";
+                            
+                            var time = new Date(allData[i].schedule[j].deliveryTime);
+                            var year = time.getFullYear();
+                            var month = time.getMonth()+1;
+                            var date1 = time.getDate();
+                            var hour = time.getHours();
+                            var minutes = time.getMinutes();
+                            var seconds = time.getSeconds();
+                            
+                            var condensedContent = "<span class='spl'>"+data[i].schedule[j].route.pickName+"</span>to<span class='spl'>"+data[i].schedule[j].route.destName+"</span>at<span class='spl'>"+hour+":"+minutes+"</span>on<span class='spl'>"+date1+"-"+month+"-"+year+"</span><a href='#' class='btn btn-success map-btn' id='map-btn' onclick='sendAccept(this);'>Accept</a>";
+                            
+                            
+                            var pickAddressDiv = document.createElement('div');
+                            pickAddressDiv.className = "pickaddress";
+                            pickAddressDiv.innerHTML = allData[i].schedule[j].route.pick;
+                            
+                            var symbolDiv = document.createElement('div');
+                            symbolDiv.className = "delivertosymbol";
+                            symbolDiv.innerHTML = "<i class='fa fa-lg fa-long-arrow-right' style='margin-top: 0;'></i>";
+                            
+                            var deliverAddressDiv = document.createElement('div');
+                            deliverAddressDiv.className = "deliveraddress";
+                            deliverAddressDiv.innerHTML = allData[i].schedule[j].route.destination;
+                            
+                            var schIdDiv = document.createElement('div');
+schIdDiv.className = "deliveryId";
+schIdDiv.innerHTML = allData[i].schedule[j].schId;
+                            schIdDiv.style.opacity=0;
+                            
+                            expandedDiv.appendChild(pickAddressDiv);
+                            expandedDiv.appendChild(symbolDiv);
+                            expandedDiv.appendChild(deliverAddressDiv);
+                            expandedDiv.appendChild(schIdDiv);
+                            
+                            
+                            condensedDiv.innerHTML = condensedContent;
+                            //expandedDiv.innerHTML = expandedContent;
+                            
+                            scheduleDiv.appendChild(condensedDiv);
+                            scheduleDiv.appendChild(expandedDiv);
+                            
+                            if(schId == allData[i].schedule[j].schId)
+                            {   cardsDiv.appendChild(scheduleDiv);}
+                             
+                        }        
+                    
+                    
+                }
+                
+                
+                
+                if (userFound == 0)
+                {
+                    alert("No user found");
+                }
+        });    
+        });
+    </script>
+    <script>
+        function removeExtras( str)
+        {
+            str = str.replace('<p>','');
+            str = str.replace('</p>', '');
+            str = str.replace(/<br>/g, ' ');
+            str = str.replace(/\t/g, '');
+            str = str.replace(/\n/g, '');
+            str = str.replace(/\s+/g, ' ');
+            return str;
+        }
+        
+        //window.onload=
+        function sendAccept(e){
+        //$('.map-btn').click(function(){
+            
+            var personGoingtoreplace = localStorage.getItem("uniusername");
+            var prnt = $(e).parentsUntil("schedule");
+            var locationAddress = document.getElementById("line1").innerHTML + document.getElementById("line2").innerHTML + ' ' + document.getElementById("city").innerHTML + ' ' + document.getElementById("postcode").innerHTML;
+            
+            var pickAddress = prnt[1].children[1].children[0].innerHTML;
+            var deliverAddress = prnt[1].children[1].children[2].innerHTML;
+            var schId =  prnt[1].children[1].children[3].innerHTML;
+            pickAddress = removeExtras(pickAddress);
+            deliverAddress = removeExtras(deliverAddress);
+
+            console.log(pickAddress);
+            console.log(deliverAddress);
+
+            var obj = {name: personGoingtoreplace, schId: schId };
+             window.location.href = "profile.html?name="+localStorage.getItem("uniusername");
+        //});
+        };
+        
+        
+        $(document).ready(function()
+        {
+            var a = document.getElementById("profileLink");
+            a.href="profile.html?name="+localStorage.getItem("uniusername");
+        });
+    
+    </script>
+
+</body>
+
+</html>
