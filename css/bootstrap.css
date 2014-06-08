@@ -5889,3 +5889,7 @@ button.close {
 #exptTime {
   margin: 0 30px;
 }
+
+.deliveryId {
+  display: none;
+}

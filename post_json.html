@@ -1,53 +1,18 @@
-[
-    {
-        "name": "Nagappan",
-        "email": "n4nagappan@gmail.com",
-        "schedule": [
-            {
-                "route": {
-                    "source": "Block 73 Telok Blangah Heights Singapore 100073",
-                    "pickName": "Balmoral Bakery",
-                    "pick": "105 Clementi Street 12 Singapore 120105",
-                    "destName": "Children Home",
-                    "destination": "Block 529 Bedok North St 3 #01-570 Singapore 460529"
-                },
-                "deliveryTime": "Mon Jun 09 2014 21:30:00 GMT+0800 (Malay Peninsula Standard Time)"
-            },
-            {
-                "route": {
-                    "source": "Block 73 Telok Blangah Heights Singapore 100073",
-                    "pickName": "727 Cakerie",
-                    "pick": "22 Yio Chu Kang Rd Singapore 545535",
-                    "destName": "Roundbox",
-                    "destination": "Block 107 Yishun Ring Road #01-233 Singapore 760107"
-                },
-                "deliveryTime": "Wed Jun 11 2014 20:00:00 GMT+0800 (Malay Peninsula Standard Time)"
-            },
-            {
-                "route": {
-                    "source": "Block 73 Telok Blangah Heights Singapore 100073",
-                    "pickName": "Balmoral Bakery",
-                    "pick": "105 Clementi Street 12 Singapore 120105",
-                    "destName": "Children Home",
-                    "destination": "Block 529 Bedok North St 3 #01-570 Singapore 460529"
-                },
-                "deliveryTime": "Mon Jun 16 2014 21:30:00 GMT+0800 (Malay Peninsula Standard Time)"
-            },
-            {
-                "route": {
-                    "source": "Block 73 Telok Blangah Heights Singapore 100073",
-                    "pickName": "727 Cakerie",
-                    "pick": "22 Yio Chu Kang Rd Singapore 545535",
-                    "destName": "Roundbox",
-                    "destination": "Block 107 Yishun Ring Road #01-233 Singapore 760107"
-                },
-                "deliveryTime": "Wed Jun 18 2014 20:00:00 GMT+0800 (Malay Peninsula Standard Time)"
-            }
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>     
+    </head>
+    <body>
+        <a href="#" id="update_button">Upload Code</a>
+    </body>
+</html>
 
-        ]
+<script>
+$("#update_button").click( function() {
 
-    },
-    {
+
+         var obj = {
         "name": "EB",
         "email": "elayabharath@gmail.com",
         "schedule": [
@@ -103,5 +68,17 @@
             }
 
         ]
-    }
-]
+    };
+
+     //obj={"name": "EB"};
+         $.ajax({
+             url: 'http://ffh.cloudapp.net/users',
+             type: 'POST',
+             //dataType: 'jsonp',
+             data: obj
+//             success: function(data) {
+//                          console.log(data);
+//                      }
+         });
+       });
+</script>

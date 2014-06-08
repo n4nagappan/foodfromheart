@@ -68,34 +68,45 @@
                         </div>
                         <br>
                         <a href="#" class="btn btn-success">Mark as completed</a>
-                        <a href="#" class="btn btn-danger">Find replacement for this.</a>
-                        </div>
+                        <a href="#" class="btn btn-danger" id="replacementBtn" onclick="sendReplacement(this);">Find replacement</a>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Custom JavaScript for the Menu Toggle -->
-    <script src="js/jquery-1.10.2.js"></script>
-    <script src="js/bootstrap.js"></script>
+</div>
 
-    <!-- Custom JavaScript for the Menu Toggle -->
-    <script>
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("active");
-        });
-    </script>
-    <script>
-        $(document).ready(function()
-        {
-            var a = document.getElementById("profileLink");
-            a.href="profile.html?name="+localStorage.getItem("uniusername");
-        });
-    </script>
+<!-- Custom JavaScript for the Menu Toggle -->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/bootstrap.js"></script>
 
+<!-- Custom JavaScript for the Menu Toggle -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+</script>
+<script>
+    $(document).ready(function()
+                      {
+                          var a = document.getElementById("profileLink");
+                          a.href="profile.html?name="+localStorage.getItem("uniusername");
+                      });
+</script>
+<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    function sendReplacement(e)
+    {
+        //getParameterByName('pick')
+    }
+</script>
 
 
 </body>

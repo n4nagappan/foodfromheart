@@ -142,14 +142,15 @@
                             deliverAddressDiv.className = "deliveraddress";
                             deliverAddressDiv.innerHTML = data[i].schedule[j].route.destination;
                             
-                            //var schIdDiv = document.createElement('div');
-                            //schIdDiv.className = "schId";
-                            //schIdDiv.innerHTML = data[i].schedule[j].schId;
+                            var deliveryTimeDiv = document.createElement('div');
+deliveryTimeDiv.className = "deliveryId";
+deliveryTimeDiv.innerHTML = time;
+                            deliveryTimeDiv.style.opacity=0;
                             
                             expandedDiv.appendChild(pickAddressDiv);
                             expandedDiv.appendChild(symbolDiv);
                             expandedDiv.appendChild(deliverAddressDiv);
-                            //expandedDiv.appendChild(schIdDiv);
+                            expandedDiv.appendChild(deliveryTimeDiv);
                             
                             
                             condensedDiv.innerHTML = condensedContent;
@@ -193,14 +194,14 @@
             
             var pickAddress = prnt[1].children[1].children[0].innerHTML;
             var deliverAddress = prnt[1].children[1].children[2].innerHTML;
-            //var schId =  prnt[1].children[1].children[3].innerHTML;
+            var schId =  prnt[1].children[1].children[3].innerHTML;
             pickAddress = removeExtras(pickAddress);
             deliverAddress = removeExtras(deliverAddress);
 
             console.log(pickAddress);
             console.log(deliverAddress);
 
-            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress//, schid: schId
+            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress, deliveryTime: schId
                       };
             window.location.href = "route.html?"+$.param(obj, true);
         //});
