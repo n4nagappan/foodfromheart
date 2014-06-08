@@ -88,7 +88,8 @@
             url: "http://ffh.cloudapp.net/users",
             success: function(allData){
                 
-                var data = localStorage.getItem("dataRequests");   
+                var dataHell = localStorage.getItem("dataRequests");   
+                var data = JSON.parse(dataHell);
                 var userName = data[0].name;
                 var schId = data[0].schId;
                 
