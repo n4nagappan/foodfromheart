@@ -16,7 +16,8 @@
         <link href="css/simple-sidebar.css" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>     
-        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/notifications.js"></script>
     </head>
 
 
@@ -34,7 +35,7 @@
                     <hr>
                     <li><a id="profileLink" href="profile.html">Profile</a>
                     </li>
-                    <li><a id="requestLink" href="request.html">Requests</a>
+                    <li><a id="requestLink" href="request.html">Requests <span id="notification">1</span></a>
                     </li>
                     <hr>
                 </ul>
