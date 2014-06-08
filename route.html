@@ -19,8 +19,8 @@
         <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <!--<script src="/socket.io/socket.io.js"></script>
-        <script src="js/notifications.js"></script>-->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/notifications.js"></script>
     </head>
 
 
@@ -107,20 +107,11 @@
         var pickAddress = getParameterByName('pick');
         var deliverAddress = getParameterByName('deliver');
         var startAddress = getParameterByName('start');
-        var deliveryTime = getParameterByName('deliveryTime');
+        var schId = getParameterByName('schId');
         
         var obj = {
             "name": localStorage.getItem("uniusername"),
-            "schedule": [
-                {
-                    "route": {
-                        "source": startAddress,
-                        "pick": pickAddress,
-                        "destination": deliverAddress
-                    },
-                    "deliveryTime": deliveryTime
-                }
-                    ]
+            "schId": schId
         };
         
           $.ajax({
@@ -128,6 +119,8 @@
              type: 'POST',
              data: obj
          });
+        
+        alert("Finding replacement");
        }
         
     function markComplete(e)
@@ -135,20 +128,11 @@
         var pickAddress = getParameterByName('pick');
         var deliverAddress = getParameterByName('deliver');
         var startAddress = getParameterByName('start');
-        var deliveryTime = getParameterByName('deliveryTime');
+        var schId = getParameterByName('schId');
         
         var obj = {
             "name": localStorage.getItem("uniusername"),
-            "schedule": [
-                {
-                    "route": {
-                        "source": startAddress,
-                        "pick": pickAddress,
-                        "destination": deliverAddress
-                    },
-                    "deliveryTime": deliveryTime
-                }
-                    ]
+            "schId": schId
         };
         
           $.ajax({
@@ -158,6 +142,7 @@
          });
         
         alert("Thank you for delivering!");
+        window.location.href = "profile.html?name="+localStorage.getItem("uniusername");
     }
         
     

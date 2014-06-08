@@ -94,7 +94,7 @@
         {
         $.ajax({
             dataType: "jsonp",
-            url: "http://ffh.cloudapp.net/users?name="+"Eb",
+            url: "http://ffh.cloudapp.net/users?name="+localStorage.getItem('uniusername'),
             success: function(data){
                 
                 var userFound = 0;
@@ -142,15 +142,15 @@
                             deliverAddressDiv.className = "deliveraddress";
                             deliverAddressDiv.innerHTML = data[i].schedule[j].route.destination;
                             
-                            var deliveryTimeDiv = document.createElement('div');
-deliveryTimeDiv.className = "deliveryId";
-deliveryTimeDiv.innerHTML = time;
-                            deliveryTimeDiv.style.opacity=0;
+                            var schIdDiv = document.createElement('div');
+schIdDiv.className = "deliveryId";
+schIdDiv.innerHTML = data[i].schedule[j].schId;
+                            schIdDiv.style.opacity=0;
                             
                             expandedDiv.appendChild(pickAddressDiv);
                             expandedDiv.appendChild(symbolDiv);
                             expandedDiv.appendChild(deliverAddressDiv);
-                            expandedDiv.appendChild(deliveryTimeDiv);
+                            expandedDiv.appendChild(schIdDiv);
                             
                             
                             condensedDiv.innerHTML = condensedContent;
@@ -201,9 +201,9 @@ deliveryTimeDiv.innerHTML = time;
             console.log(pickAddress);
             console.log(deliverAddress);
 
-            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress, deliveryTime: schId
+            var obj = {pick: pickAddress, deliver: deliverAddress, start: locationAddress, schId: schId
                       };
-            window.location.href = "route.html?"+$.param(obj, true);
+             window.location.href = "route.html?"+$.param(obj, true);
         //});
         };
         
